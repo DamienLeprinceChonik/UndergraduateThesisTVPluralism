@@ -1,0 +1,633 @@
+---
+title: "Internship Report: French journalists working conditions, state of media market, perception of TV guests and pluralism"
+author: "Leprince-Chonik Damien"
+date: "`r Sys.Date()`"
+bibliography: BiblioMedia.bib
+output:
+  bookdown::pdf_document2:
+    latex_engine: xelatex
+    citation_package: biblatex
+    keep_tex: true
+    toc: true
+    number_sections: true
+    includes:
+      in_header: preamble.tex
+    pandoc_args: [
+      "--pdf-engine-opt=-shell-escape",
+      "--variable=mainfont:Times New Roman"
+    ]
+fontsize: 12pt
+mainfont: "Times New Roman"
+linestretch: 1.5
+geometry: margin=2.5cm
+citeproc: false
+---
+```{r setup, include=FALSE}
+library(dplyr)
+library(knitr)
+library(ggplot2)
+library(stringr)
+library(tibble)
+library(kableExtra)
+library(readxl)
+library(lubridate)
+library(tidyr)
+library(modelsummary)
+library(broom)
+library(bookdown)
+```
+
+\vspace{4\baselineskip}
+**Internship advisor:** *Julia Cagé (Sciences Po Paris)*
+\newpage
+
+# Abstract
+
+This internship report aims at presenting the two projects I worked on with Julia Cagé and Camille Urvoy. The first one consists of a survey for French journalists in order to study their working conditions according to the characteristics of their media and a survey for media owners to study the media market and its evolution. The second project seeks to study the impact of the TV banner presentation of a TV guest on the perception people will have of her/his talk by an experimental study. Since these projects are not yet completed, no data or results are currently available. For this reason, I also present in this report a study of pluralism in the French broadcast environment. Collecting data from main political talk shows on the most viewed TV and radio channels, I show that pluralism of thought is not upheld within French broadcast environment, leading to an overrepresentation of right-leaning guests and underrepresentation of left-leaning guests. Moreover, using Chapel Hill Expert Survey (CHES) political index of French parties, my results indicate that private channels are significantly more likely to host guests from right-leaning political orientation and that public channels are more likely to host guests from left-leaning political orientation. An increase of one political index following the CHES index significantly results to a 24.4% increase in the likelihood to be invited on a private channel, when an increase of one political index following the CHES index significantly results to a 19.6% decrease in the likelihood to be invited on a public channel. Last but not least, this study of pluralism tends to show that the CNews team's argument that they do not uphold pluralism because left-leaning politicians refuse to talk to them is false.
+
+# Introduction
+
+## Journalists working conditions (literature review) and media owners perception of the media market
+
+The following section aims to understand the state of academic research all over the world concerning the journalism sector and working conditions of journalists (no survey on media owners has ever been conducted to my knowledge, making us the first to study their perception). Comprehensive academic study of journalism and journalists is deeply rooted in two distinct ways of studying it: using cross-national comparison between journalistic cultures and using cross-individuals comparison within countries to study the role of organisational factors. Despite relying on different scales, both of those ways of understanding journalism have developed together using the same methodology; surveys, and a  framework mainly led by professor David H. Weaver. At first, we will present the state of cross-country comparison studies and then the state of within-country comparison. This understanding of the literature will allow us to understand the role and state of French journalistic environment studies and how we could deepen it.
+
+Since the end of the 1990’s, a framework has developed about journalists' characteristics and working conditions around the world, aiming at better understanding this professional field which is strongly associated with political and public life, especially within democracies \parencite{curran_media_2011}. In 1998, David H. Weaver published *The Global Journalist: News People Around the World*, the first worldwide cross-national study of journalism using systematic surveys. This book, focusing on twenty-one countries\footnote{Among the countries studied: Algeria, Australia, Brazil, Canada, Chile, China, Ecuador, Finland, France, Germany, Hong Kong, Hungary, Korea, Mexico, New Zealand, Pacific Islands, Poland, Spain, Taiwan, and the United States.}, tried to shed light on many aspects of journalism, such as demographics of journalists and their working conditions \parencite{weaver_global_1998}. This pioneering project was deepened until the release of a new book, mainly co-authored by David H. Weaver and Lars Willnat and entitled *The Global Journalist in the 21st Century*. Following the survey method of the previous study, this one included thirty-three countries and was aimed at expanding the comprehensive database on journalism around the world previously begun, collecting data directly from journalists, and to study variations in the field over time using previous results \parencite{willnat_global_2013}. The chapter thirty-five of this book, entitled Worlds of Journalism, presents the pilot project of what will become the widest study on journalism across the world, namely the Worlds of Journalism study (WJS)\footnote{\href{https://worldsofjournalism.org/}{Web page of the project}}. 
+
+Indeed, common criticism about the framework developed by Weaver in 1998 was that it lacks a strict comparative design, as they compared different populations of journalists at different points in time, with varying interviews methods, questionnaires and sample sizes \parencite[12]{hanitzsch_1_2019}. This criticism was even recognized by Weaver himself in 1998, since he wrote that making comparisons on such methodological variability would be “a game of guesswork at best” \parencite[455]{weaver_global_1998}. To overcome this issue, the Worlds of Journalism study was officially launched in 2011, after the piloting project (also being the first wave of the WJS) being included in the Weaver and Willnat (2013) book.
+
+The second wave of the WJS (2012 - 2016) was a much more institutionalized and organized study that ended up with the publication of a book, Worlds of Journalism (2019), which was edited by Thomas Hanitzsch, Folker Hanusch, Jyotika Ramaprasad, and Arnold S. de Beer. By surveying 27 500 journalists from sixty-seven countries, which represent three quarters of the world journalists population, this second wave represents to date the most comprehensive and organized database available to study journalism around the world through journalists' perception. It aims at helping journalism researchers, practitioners, media managers and policymakers to better understand the worldviews and changes that are taking place in the professional orientations of journalists, the conditions and limitations under which journalists operate, and the social functions of journalism in a changing world while avoiding westerners bias and including all forms of journalism \parencite[2-4]{hanitzsch_1_2019}. Moreover, the project seeks to make a call “for de-Westernizing and decentering journalism theory, research, practice, and education” and stopping intellectual imperialism, by including scholars from all around the world \parencite[15-17]{hanitzsch_1_2019}. The third wave of the WJS (2021 - 2024) has just ended on the 16 june of 2025, with a public data release scheduled for April 2028\footnote{\href{https://worldsofjournalism.org/wp-content/uploads/2025/04/WJS3_Data_Sharing_Protocol-1.5.1.pdf}{Link toward WJS data sharing protocol}}. This wave goes beyond the previous one, with 32,350 journalists in 75 countries. 
+
+Despite being an extensive source of data, the WJS itself recognizes that “nation as unit of comparison is not the only way of understanding different practice of journalism” \parencite[10]{hanitzsch_2_2019}. Indeed, differences in journalism can appear through organisational factors that can arise within a country such as ownership, size, editorial policy, managing policy and profit expectations \parencite{jastramskis_role_2025}. As a matter of fact, the WJS did not only create a database allowing to compare journalistic culture across countries but most of all a database to study the role of organisational factors on journalism within a country as evidenced by the extensive literature coming from WJS database studying specific countries (to date, 137 publications were made since 2007, you can refer to this website for an exhaustive list of publication made with WJS data: https://worldsofjournalism.org/publications/). In the following paragraph, we will thus discuss the state of the literature concerning cross-individual comparison within a country. 
+
+The journalists of the United States were among the very first to be studied through a comprehensive and systematic survey aiming at studying the effects of organisational factors on the journalism profession. The first survey of this kind is dated from 1982 and represents the first wave of the American Journalist Survey (AJS). Results of this survey were presented in the book *The American Journalist: A Portrait of U.S. News People and Their Work* published in 1986 and co-authored by David H. Weaver and G. Wilhoit. Following this wave, other waves followed in 1992, 2002, 2013 and 2022, with results respectively published in *The American Journalist in the 1990s U.S. News People at the End of An Era* \parencite{weaver_american_1996}, The American Journalist in the 21st Century U.S. News People at the Dawn of a New Millennium \parencite{weaver_american_2009}, *The American Journalist in the Digital Age: Another Look at U.S. News People* \parencite{weaver_american_2019} and *The American Journalist Under Attack: An Institution at Risk* \parencite{willnat_american_2025}. Since the pioneering work of David H. Weaver inspired the WJS, a wide majority of the questionnaires used in those studies are the same as the one in the WJS. As stated before, a lot of academic studies concerning within-level countries use data from the WJS in order to produce academic research. From this point of view, we can state that journalism is well studied across the world (with at least 137 publications since 2007). 
+
+When focusing on France, the observation is much less pleasing. Indeed, France is absent from the first and the third wave of the WJS. About the second wave, French data was among 4 others countries considered as insufficiently representing its country’s population making it tagged as non representative, greatly damaging the relevance of its data set \parencite[8]{lauerer_3_2019}. 
+
+In order to overcome this issue, I worked with Julia Cagé and Camille Urvoy on a project aiming at surveying French journalists and media owners. Our project seeks to deepen the similar surveys already carried out in other countries, as focusing only on French journalism environment rather than several countries journalism allow us to ask more specific questions without having to think about the harmonization of surveys (as it is the case in the WJS). This project aims at answering the following question: what is the state of journalism profession in France and the state of the French media market ?
+
+Asking journalists about their working conditions and media owners about the state of the media market is not the only relevant approach to study the state of journalism and media in France. Another important characteristic of the French journalistic environment is the plurality that it should maintain in order to preserve democracy. 
+
+## TV-radio plurality
+
+In France, "pluralist expression of currents of thought and opinion" should be guaranteed by TV and radio channels, according to the law on freedom of communication of October 30, 1986 \parencite{noauthor_loi_nodate}. This law was particularly in the spotlight in 2024. Indeed, in november 2021, the NGO *Reporters Sans Frontières* (RSF) brought a case before the *Autorité de régulation de la communication audiovisuelle et numérique* (Arcom), requesting that the TV channel Cnews be put on formal notice for failure to comply with its legal obligations toward honnesty and its pluralism of information. After an Arcom refusal notified to RSF on april 5 2022 and an appeal from RSF to the council of state, Arcom was finally asked on february 2024 to study the case \parencite{rsf_france_2024}. At the end, Arcom has decided to warn Cnews about its lack of pluralism on certain subjects, noting an imbalance in existing pluralism \parencite{liberation_manque_2024, leparisien_pluralisme_2024}. This case highlights the difficulties the regulator may have in quantifying speaking time. Since January 1 2018, Arcom has established news rules governing speaking time on TV channels. The executive branch (president, ministers and assistants) should be allocated one-third of available airtime. The rest of the speaking time must be allocated equitably according to the distribution of electoral consultations. 
+
+In this study, I seek to asses if pluralism of thought is respected on three public TV-radio channels: France 5, FranceInter and FranceInfo and on two private TV-radio channels: BFM TV/RMC and Cnews/Europe1. I am considering BFM TV/RMC and Cnews/Europe1 together since they are owned by the same groups and since the programs I will be interested in are simultaneously diffused on the TV channel and the radio channel. I am particularly interested in the mode of governance (public/private) of those media, since a previous study have shown that partisan control over a media will affect its content and that private channels are inviting more right-leaning politicians \parencite{durante_partisan_2012}. The study of Durante and Knight shows that media operators of public TV influence the stance of the media in the case of Italy, especially by giving more airtime to ideologically congruent guests. This process is likely to apply for all types of TV-radio medias and for all countries, making it important to monitor pluralism to prevent media operators to use their media as a political tool. Thus, my study seeks to address the following question: is pluralism rules respected on French TV-radio broadcast environment ?
+
+However, it is not always clear if the person speaking on TV or radio is linked to a party or an ideology. This fact is especially pointed out by Julia Cagé, Camille Urvoy and Nicolas Hervé, that use the term "politically engaged non-politicians" (PENOPs), refering to people endorsing candidates or participating in think tank. TV-radio may leverage these PENOPs to politically slant  their content while circumventing existing pluralism regulations \parencite{cage_political_2022}. 
+
+Because of this, I have been working with Julia Cagé and Camille Urvoy on a project to study the difference in perception of a person's words when presented in different ways. As a matter of illustration, we assumed that if Julia Cagé was talking on TV and presented as an economist from Sciences Po Paris, the perception of what she is saying would be different than is she was presented as an economist from Sciences Po Paris with a left-leaning political orientation. This illustration can be extended to all people talking on TV-radio environment that are not describe with a political leaning despite having been a candidate for a political party or having participated in the life of a party. This fact is important, as it has been demonstrated that a signal about political leaning of someone can influence the way we are taking his or her claim \parencite{hartman_who_2009, turner_messenger_2007}. 
+
+Thus, my role as an intern was to prepare the experimental design of a study seeking to understand the extent to which a TV banner presenting a guest can influence the perception of what this guest is saying. Contrary to my empirical verification of pluralism, this study focuses on televised presentation banners of guests, i.e. only on television and not on radio.
+
+# Methodology 
+
+## Journalists working conditions and media owners perception of media market
+
+### Survey for French journalists
+
+Our survey for journalists was designed taking inspiration and method from several previous works using survey method and studying journalists. As an intern, I did a literature review on the subject, enabling us to create a questionnaire linked to the literature. Our survey is mainly inspired by the survey of *The American Journalist in the 21st Century U.S. News People at the Dawn of a New Millennium \parencite{weaver_american_2009}* and the survey of the *World of Journalism Survey \parencite{hanitzsch_appendix_2019}*. We also go beyond those previous works, asking questions about: their career, degree of autonomy, perception of the employer, perception of the journalism profession, perception of the concentration and independence of the media sector, pluralism, bargaining power and impact of new technologies.  
+
+Our survey's design seeks to respect basic principles of academic surveying, especially a proper length to avoid survey fatigue, as well as screening to minimize careless answers while adopting the best practices such as open-ended questions, closed-ended questions, measurement issues and real-stakes questions \parencite{stantcheva_how_2022}.
+
+In order to reach journalists, we are in discussion with the *Commission de la Carte d'Identité des Journalistes Professionnels* (CCIJP), the institution issuing press cards in France. After validating our surveys, the CCIJP will allow us to distribute our questionnaire to all the journalists in their database, allowing us to have a broad sample of French journalists population. 
+
+### Survey for owners of French media  
+
+Since I did not find any previous survey focused on media owners, we took inspiration from the surveys dedicated to journalists. This second survey is asking several questions about: media finance, governance, profitability, difficulties, perception of concentration, competition and the impact of regulations. Media owners will also be contacted through the CCIJP.
+
+## TV-radio plurality
+
+### Dataset and scraping criteria
+
+In order to study the plurality of the French TV-radio broadcast environment, I scraped guests and their descriptions from five programs: *Face à Duhamel* on BFMTV/RMC, *Le débat du 7-10h* on the FranceInter radio, *L'interview politique* of Sonia Mabrouk on Cnews/Europe1, *C ce Soir* on France 5 and lastly *Les informés* on FranceInfo. The choice of programs was made following several criteria. Firstly, replays should be available at least for the period september 2023 - april 2025, which is my period of study. Then, a clear description of the guests and a date properly scrapable were mandatory. Last but not least, a selected program should have some political guests at least from time to time\footnote{Note: It is only after scraping data that I realized the program Les informés has almost no more political guest and almost only journalists since around 2020, except for some ministers}. The selected programs are considered to be significant enough to draw some results from them, as they are the main political talk shows on the selected channels. 
+
+My scraping method relied heavily on the archives of selected programs. Four out of five programs were scraped thanks to archives\footnote{Note: Face à Duhamel, Le débat du 7-10h, L'interview politique of Sonia Mabrouk and Les informés}. Scraping consisted at collecting link towards all programs thanks to an archive URL. Basically, it was sufficient to collect all the links on the archive webpage, and then to sort keeping only the programs links. For instance, for the radio program *Le débat du 7-10h*, all links to programs were scraped thank to this URL: https://www.radiofrance.fr/franceinter/podcasts/le-debat-du-7-10?p=2, iterating the collect from p=1 to p=16. Thereafter, I only had to keep links beginning by "https://www.radiofrance.fr/franceinter/podcasts/le-debat-du-7-10" since all programs URL had the same beginning. For instance, see: https://www.radiofrance.fr/franceinter/podcasts/le-debat-du-7-10/le-debat-du-7-10-du-jeudi-28-septembre-2023-5915642. The same process applied for those four programs. Next step was to find on the webpages of programs the proper tag in page coding. I systematically collected titles, dates, episodes presentations and URLs. 
+
+The scrapping process was slightly different for the *C ce Soir* program, since replay were only available on YouTube. I had to use the YouTube Data API v3. Thanks to this API, I was able to collect all the titles, dates and  descriptions wanted. 
+
+After collecting data, I still had to find pattern in order to properly extract guest name and guest description, either from episode description or episode title. For instance, descriptions of the program *Face à Duhamel* were always written as follows: "Alain Duhamel, éditorialiste à BFMTV, a débattu avec Sébastien Chenu, député du Nord, vice-président du Rassemblement national, dans l'émission BFM Story présentée par Olivier Truchot et Alain Marschall sur BFMTV" which allowed me to collect the guest name thanks to the pattern "a débattu avec" and the guest presentation which was always following after a ",". Broadly speaking, the same process applied to five programs. 
+
+Lastly, I did some manual cleaning in order to assure that I was not missing some presentation or some relevant information. 
+
+In order to link guests and their political affiliation, I made a textual analysis looking for patterns within the description of the guest. Such patterns are available at Table 1.
+
+```{r pattern, results='asis', echo=FALSE}
+mots_cles <- tibble::tribble(
+  ~Variable, ~Pattern,
+  "Far_left", "npa, force ouvrière, except 'police-force ouvrière'",
+  "LFI", "lfi, france insoumise",
+  "EELV", "eelv, les verts, écologiste",
+  "PCF", "pcf, parti communiste, communiste, except 'Marc Lazar'",
+  "PS", "ps, parti socialiste, socialiste, place publique, nouvelle donne, except 'belge'",
+  "NUPES", "nupes",
+  "Maj_Pre", "lrem, la république en marche, ministre, renew europe, horizons, epr ensemble, except 'ancien ministre' and 'ancienne ministre'",
+  "MODEM", "modem",
+  "LIOT", "liot",
+  "LR", "lr, républicains, partie populaire européen",
+  "DLF", "debout la france",
+  "RN", "rn, udr, rassemblement national, union des droites pour la république",
+  "Reconquête", "reconquête, identité-libertés"
+)
+
+mots_cles %>%
+  kable("latex", booktabs = TRUE, caption = "Patterns used for political coding") %>%
+  kable_styling(
+    latex_options = c("striped", "hold_position", "scale_down"),
+    full_width = FALSE,
+    font_size = 10
+  ) %>%
+  column_spec(2, width = "14cm", latex_valign = "m") 
+```
+
+After cleaning automatically and manually the scraped data, my dataset is composed of 8 959 guests on 2 433 programs, including 3 948 guests on 1 130 programs between september 2023 and april 2025. Among them, 482 guests were attributed to one of the political patterns presented in Table 1.
+
+Table 2 shows that private TV-radio channels (Cnews/Europe 1 and BFM TV/RMC) have a tendency to host far more right-leaning guests, whereas public service channels (France Info, France Inter and France 5) host more presidential majority and left-leaning guests. 
+
+```{r tab-political-guests, echo=FALSE, warning=FALSE, message=FALSE}
+All_programs_propre <- read_excel("C:/Users/damie/OneDrive/Documents/SMD/Media intership/Data/all_emissions_propre.xlsx")
+invisible(Sys.setlocale("LC_TIME", "C"))
+
+# To add political coding
+
+Plurality_data <- All_programs_propre %>%
+  mutate(
+    Far_left = if_else(str_detect(str_to_lower(description_invite), "npa|force ouvrière") &
+      !str_detect(str_to_lower(description_invite), "police-force ouvrière"), 1, 0),
+    LFI = if_else(str_detect(str_to_lower(description_invite), "lfi|france insoumise"), 1, 0),
+    EELV = if_else(str_detect(str_to_lower(description_invite), "eelv|les verts|écologiste"), 1, 0),
+    PCF = if_else(
+      str_detect(str_to_lower(description_invite), "pcf|parti communiste|communiste") &
+        !str_detect(str_to_lower(invite), "marc lazar"), 1, 0),
+    PS = if_else(
+      str_detect(str_to_lower(description_invite), " ps |parti socialiste|socialiste|place publique|nouvelle donne") &
+        !str_detect(str_to_lower(description_invite), "belge"), 1, 0),
+    NUPES = if_else(str_detect(str_to_lower(description_invite), "nupes"), 1, 0),
+    Maj_Pre = if_else(
+      str_detect(str_to_lower(description_invite), "lrem|la république en marche|ministre|renew europe|horizons|epr|ensemble") &
+        !str_detect(str_to_lower(description_invite), "ancien ministre|ancienne ministre|ancien premier ministre"), 1, 0),
+    MODEM = if_else(str_detect(str_to_lower(description_invite), "modem"), 1, 0),
+    LIOT = if_else(str_detect(str_to_lower(description_invite), "liot"), 1, 0),
+    LR = if_else(str_detect(str_to_lower(description_invite), " lr |partie populaire européen|républicains"), 1, 0),
+    DLF = if_else(str_detect(str_to_lower(description_invite), "debout la france"), 1, 0),
+    RN = if_else(str_detect(str_to_lower(description_invite), " rn | udr |rassemblement national|union des droites pour la république"), 1, 0),
+    Reconquête = if_else(str_detect(str_to_lower(description_invite), "reconquête|identité-libertés"), 1, 0),
+  )
+
+# To see the number of guests coming from private and public channel (presenting data)
+
+Plurality_by_channel <- Plurality_data %>%
+  filter(date_formate >= as.Date("2023-09-01") & date_formate <= as.Date("2025-04-30")) %>%
+  filter(!(Far_left == 0 & LFI == 0 & EELV == 0 & PS == 0 & PCF == 0 & NUPES == 0 & 
+             Maj_Pre == 0 & MODEM == 0 & LIOT == 0 & LR == 0 & RN == 0 & DLF == 0 & 
+             Reconquête == 0)) %>%
+  mutate(
+    Governance = if_else(str_detect(str_to_lower(chaine), "Cnews/Europe1
+|BFMTV/RMC"), 1, 0) ) %>%
+  mutate (
+    Party = case_when(
+      Far_left == 1 | LFI == 1 | EELV == 1 | PS == 1 | PCF == 1 | NUPES == 1 ~ "Left",
+      Maj_Pre == 1 | MODEM == 1 | LIOT == 1 ~ "Presidential majority",
+      LR == 1 | RN == 1 | DLF == 1 | Reconquête == 1 ~ "Right"
+    )
+  )
+
+# Presenting
+
+table_data <- Plurality_by_channel %>%
+  count(chaine, Party) %>%
+  pivot_wider(names_from = Party, values_from = n, values_fill = 0)
+
+table_data <- table_data %>%
+  bind_rows(
+    table_data %>%
+      summarise(
+        chaine = "Observation",
+        across(where(is.numeric), sum)
+      )
+  )
+
+kable(table_data, 
+      col.names = c("Channel", "Left", "Presidential Majority", "Right"),
+      caption = "Number of Guests by political orientation",
+      booktabs = TRUE,
+      align = c("l", "c", "c", "c")) %>%
+  kable_styling(
+    latex_options = c("striped", "hold_position", "scale_down"),
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+    full_width = FALSE,
+    position = "center"
+  ) %>%
+  row_spec(nrow(table_data), bold = TRUE) %>%  # Mettre la ligne Total en gras
+  footnote(general = "Scraped data by the author",
+           general_title = "Source:",
+           footnote_as_chunk = TRUE)
+```
+
+### Empirical strategy
+
+In order to study if private channels are more likely to host right-leaning guests and public channels to host presidential majority/left-leaning guests, I used the Chapel Hill Expert Survey (CHES) of 2019 to attribute a political leaning between 0 and 10 to TV-radio political guests. 
+
+The CHES project aims at estimating party positioning on ideology, policy issues and international relations for national parties in countries across the world. Their methodology relies on an harmonized survey answered by national specialists of studied countries. Table 3 shows the political index of each French parties. 
+
+```{r data-right-left-data-plot, echo=FALSE, warning=FALSE, message=FALSE}
+
+
+# Study of impact of being on private channel or public channel 
+
+Plurality_private_public_study <- Plurality_data %>%
+  filter(date_formate >= as.Date("2023-09-01") & date_formate <= as.Date("2025-04-30")) %>%
+  filter(!(Far_left == 0 & LFI == 0 & EELV == 0 & PS == 0 & PCF == 0 & NUPES == 0 & 
+             Maj_Pre == 0 & MODEM == 0 & LIOT == 0 & LR == 0 & RN == 0 & DLF == 0 & 
+             Reconquête == 0)) %>%
+  mutate(
+    Governance = if_else(str_detect(str_to_lower(chaine), "cnews/europe1|bfmtv/rmc"), 1, 0),
+    Political_Index = case_when(
+      Far_left == 1 ~ 0,
+      LFI == 1 ~ 1.25,
+      EELV == 1 ~ 2.5,
+      PCF == 1 ~ 1.125,
+      PS == 1 ~ 3,
+      NUPES == 1 ~ 1.97,
+      Maj_Pre == 1 ~ 6.33,
+      LIOT == 1 ~ 6.33,
+      MODEM == 1 ~ 6.125,
+      LR == 1 ~ 7.875,
+      RN == 1 ~ 9.75,
+      DLF == 1 ~ 9,
+      Reconquête == 1 ~ 10)
+    )
+
+# Faire un tableau avec les indices politiques 
+
+Plurality_private_public_study_presentation <- Plurality_private_public_study %>%
+  summarise(
+    Far_left = sum(Far_left, na.rm = TRUE),
+    LFI = sum(LFI, na.rm = TRUE),
+    EELV = sum(EELV, na.rm = TRUE),
+    PCF = sum(PCF, na.rm = TRUE),
+    PS = sum(PS, na.rm = TRUE),
+    NUPES = sum(NUPES, na.rm = TRUE),
+    Maj_Pre = sum(Maj_Pre, na.rm = TRUE),
+    LIOT = sum(LIOT, na.rm = TRUE),
+    MODEM = sum(MODEM, na.rm = TRUE),
+    LR = sum(LR, na.rm = TRUE),
+    RN = sum(RN, na.rm = TRUE),
+    DLF = sum(DLF, na.rm = TRUE),
+    Reconquête = sum(Reconquête, na.rm = TRUE)
+  ) %>%
+  pivot_longer(everything(), names_to = "Party", values_to = "Number_of_Guests") %>%
+  mutate(
+    Political_Index = case_when(
+      Party == "Far_left" ~ 0,
+      Party == "LFI" ~ 1.25,
+      Party == "EELV" ~ 2.5,
+      Party == "PCF" ~ 1.125,
+      Party == "PS" ~ 3,
+      Party == "NUPES" ~ 1.97,
+      Party == "Maj_Pre" ~ 6.33,
+      Party == "LIOT" ~ 6.33,
+      Party == "MODEM" ~ 6.125,
+      Party == "LR" ~ 7.875,
+      Party == "RN" ~ 9.75,
+      Party == "DLF" ~ 9,
+      Party == "Reconquête" ~ 10
+    )
+  )
+
+kable(Plurality_private_public_study_presentation, 
+      col.names = c("Political Party", "Number of Guests", "Political Index"),
+      caption = "Number of Guests and Political Index by Party",
+      booktabs = TRUE,
+      align = c("l", "c", "c"),
+      digits = 3) %>%
+  kable_styling(
+    latex_options = c("striped", "hold_position", "scale_down"),
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+    full_width = FALSE,
+    position = "center"
+  ) %>%
+  footnote(general = "Political Index ranges from 0 (far-left) to 10 (Reconquête)",
+           general_title = "Note:",
+           footnote_as_chunk = TRUE)
+
+```
+
+Since the CHES does not classify NPA and Force ouvrière parties (Far_left), I assigned them 0, since they are usually considered as more on the left than LFI and PCF. I applied the same logic for Reconquête, that I assigned with a 10 since they are usually considered as more on the right than the FN. About LIOT, I rated them the same as LREM (6.33) for the proximity of their votes with the presidential majority. Since NUPES was composed by LFI, PCF, EELV and PS, I simply calculated the average of the four political index scores in order to produce the NUPES political index. I assumed that it was not better to take the political index of the mother party of the guest, since the political signal sent to the viewers of the show was "NUPES" and not the mother party. 
+
+Interestingly, PS is the most invited left-oriented party on TV-radio despite only collecting 1.75% of first-round votes cast at the 2022 French presidential election compared to the 21.95% collected by LFI. The same comment applies to Reconquête, which was almost seven times less represented than LR despite having almost the double of votes of LR during the 2022 election. 
+
+In my analysis, I assess if there is a correlation between being invited on a private channel and having a more right-leaning political orientation. In other words, I am studying whether private channels invite more right-wing people. My baseline specification is the following:
+
+$$
+\Pr(Governance_{i,c,t} = 1) = \text{logit}^{-1}(\alpha + \beta_1 \cdot Political\_Index_{i,t})
+$$
+
+where *Governance* is a dummy variable being either private (1) or public (0) and *Political_Index* the CHES rating of the guest *i* talking on channel *c* at time *t*. Since Governance is a dummy variable, it is not possible to do a simple linear regression \parencite{wooldridge_econometric_2010}. To overcome this issue, we follow the method of previous works on media \parencite{groeling_when_2010, larcinese_partisan_2011}.
+
+The second baseline specification seeks to reverse the previous analysis by quantifying the extent to which public channels are hosting more left-leaning guests: 
+
+$$
+\Pr(Governance\_inv_{i,c,t} = 1) = \text{logit}^{-1}(\alpha + \beta_1 \cdot Political\_Index_{i,t})
+$$
+where *Governance_inv* corresponds to 1 - Governance and still is a dummy variable being this time either private (0) or public (1). The rest of the model remains the same as before. 
+
+### Experimental design to study perception of PENOPs
+
+The data I scraped to study TV-radio pluralism allowed me to have a broad view on who is talking on TV, and how they are introduced. Thanks to this, I was able to search for people described as coming from a "think tank", an "institute" or a "foundation". The political leaning of those people are usually not given, despite having been a candidate for a political party or having participated in the life of a party. After checking my data, Julia Cagé and Camille Urvoy decided to keep five interesting guests for our experimental design. 
+
+*Firstly*, Thibault de Montbrial, usually presented as a lawyer and president of the *Centre de réflexion sur la sécurité intérieure (CRSI)*. We found him on BFM TV/RMC, LCI, Cnews/Europe 1 and FranceInter. Thibault de Montbrial was interestingly a LR candidate in the 2022 legislative elections in the Yvelines department (6ᵉ constituency) \parencite{marianne_legislatives_2022}, allowing us to add that he was an "ex-LR candidate" on his TV banner presentation without lying to our study sample. Moreover, the *Centre de réflexion sur la sécurité intérieure (CRSI)* is among the institution funded by Pierre-Édouard Stérin as part of its Pericles project - which aims to make the far right win the 2027 French presidential election, especially through a strong presence in the media \parencite{lhumanite_thibault_2025} - making Thibault de Montbrial of particular interest for our study. Indeed, it seems that his presence on TV is motivated by political matters, so it is of great importance to understand if what he says on TV can be perceive differently according to how he is presented on his TV banner. 
+
+*Secondly*, Olivier Babeau, presented either as economist or essayist and always as the president of the *Institut Sapiens* on BFM TV, Cnews and France 5. Despite being professor of management at the university of Bordeaux, he never published any research article in a peer-reviewed economics journal, which raises questions about his qualification as an economist. Being a former counselor of the prime minister François Fillon, and the *Institut Sapiens* being close to firms and associated with strong neo-liberalism, we can add that he has a right-leaning political orientation on his TV banner without lying in our experiment. 
+
+*Thirdly*, Thomas Porcher, presented either as an economist or professor at the Paris School of Business. He is also a member of the association "*les économistes atterrés*". This association is usually considered as on the left of political spectrum, since it seeks to "resist the neoliberal orthodoxy". We could thus add that he is a heterodox economist, or a leftist economist. 
+
+*Then*, David Djaïz, former counselor of French president Emmanuel Macron and usually presented as an essayist and professor at Sciences Po Paris. As for Olivier Babeau, David Djaïz is not a scientist publishing in peer reviewed journal and only talk at Sciences Po Paris sporadically. His proximity with Emmanuel Macron allow us to add on his TV banner presentation that he is one of his former counselor as a political leaning signal. We identified David Djaïz mainly on LCP, BFM TV and France 5.
+
+*Lastly*, Dominique Reynié, whom we identified mainly on Cnews/Europe  1, BFM TV, France 5 and FranceInter, is presented as the director of the *Fondation générale pour l'innovation politique (FONDAPOL)* which is a think tank oriented to the right of the political spectrum. Dominique Reynié was also LR candidate for the 2015 regional elections, allowing us to add on his TV banner presentation that he is a "former LR candidate". 
+
+Our experimental design will consist of a control group viewing a video of one of our five guests unmodified and one treatment group viewing the same video but with a TV banner presentation modified by us, either removing all the information on the guest or adding a political leaning signal. Then, a set of questions will be asked to our sample, in order to measure demand for content from this guest and rate of recall of what has been said. The survey will be conducted through the YouGov institute. Since the survey is not finished, no results will be available for this report.
+
+To avoid any search bias about how are built TV banner presentation, I conducted several interviews and have been in touch with journalists from BFM TV and LCI. According to them, banner presentation are either made through Twitter research, or by asking directly to the guest how he/she wants to be presented. No pressure from editors is felt about making those banners. For instance, when the journalist and editor at BFMTV Romain Langlet has to make a TV banner presentation, he tries to select information on Twitter by keeping only the relevant information on the guests according to the subject about she/he will talk. 
+
+# Results
+
+## Journalists working conditions 
+
+Since our two surveys are still not sent, no data were available to study. 
+
+## TV-radio plurality 
+
+Following ARCOM regulation stating that one-third of available airtime should be allocated to the executive branch and the remaining time being dispatched equally between other parties proportionally following results of elections, my result shows that pluralism of thought is not respected on TV-radio French broadcast environment. Following the results of the 2022 French presidential election, airtime should be equally distributed between what we consider as "left" parties (35.07% of first-round votes cast) and what we consider as "right" parties (37.06 of first-round votes cast). Thus, we should have one-third of available airtime for left parties, one-third for presidential majority and one-third for right parties. Graphic 1 shows that, prior to October 2024, right-leaning guests were the ones with the most airtime, before the presidential majority and far before left-leaning guests. This trend seems to change after October 2024, where guests from presidential majority are covering a majority of available airtime. This change could be linked to an ARCOM deliberation on respect for the principle of pluralism of currents of thought and opinion in the audiovisual media issued by ARCOM on July 17 2024 \parencite{arcom_deliberation_nodate}. This result suggest that ARCOM's regulation may be partially effective in order to ensure pluralistic expression on TV-radio French broadcast environment. Still, left-leaning guests kept being under-represented on the covered period. In average, we had by month 9.05 guests from presidential majority, 8.9 from right-leaning parties and 6.45 from left-leaning parties, indicating that pluralism is reasonably upheld between right and presidential majority but not for left. 
+
+\vspace{1\baselineskip}
+
+```{r data-processing-plot, echo=FALSE, warning=FALSE, message=FALSE}
+# To make a graph from September 2023 to april 2025
+
+Plurality_by_month <- Plurality_data %>%
+  filter(date_formate >= as.Date("2023-09-01") & date_formate <= as.Date("2025-04-30")) %>%
+  mutate(month = floor_date(date_formate, unit = "month")) %>%
+  group_by(month) %>%
+  summarise(
+    Far_left = sum(Far_left, na.rm = TRUE),
+    LFI = sum(LFI, na.rm = TRUE),
+    EELV = sum(EELV, na.rm = TRUE),
+    PCF = sum(PCF, na.rm = TRUE),
+    PS = sum(PS, na.rm = TRUE),
+    NUPES = sum(NUPES, na.rm = TRUE),
+    Maj_Pre = sum(Maj_Pre, na.rm = TRUE),
+    MODEM = sum(MODEM, na.rm = TRUE),
+    LIOT = sum(LIOT, na.rm = TRUE),
+    LR = sum(LR, na.rm = TRUE),
+    DLF = sum(DLF, na.rm = TRUE),
+    RN = sum(RN, na.rm = TRUE),
+    Reconquête = sum(Reconquête, na.rm = TRUE)
+  ) %>%
+  ungroup()
+
+Plurality_by_month_long <- Plurality_by_month %>%
+  pivot_longer(cols = -month, names_to = "Party", values_to = "Number_of_guest") %>%
+  mutate (
+    Party = case_when(
+      Party %in% c("Far_left", "LFI", "EELV", "PCF", "PS", "NUPES") ~ "Left",
+      Party %in% c("Maj_Pre", "MODEM", "LIOT") ~ "Presidential majority",
+      Party %in% c("LR", "DLF", "RN", "Reconquête") ~ "Right"),
+    month = as.Date(month),
+    Number_of_guest = as.numeric(Number_of_guest)) %>%
+  group_by(month, Party) %>%
+  summarise(Number_of_guest = sum(Number_of_guest, na.rm = TRUE), .groups = "drop")
+
+ggplot(Plurality_by_month_long, aes(x = month, y = Number_of_guest, color = Party))+
+  geom_point(size = 1.5) +
+  geom_line(size = 0.4) +
+  geom_vline(xintercept = as.Date("2024-07-01"), linetype = "dashed", color = "black") +
+  annotate("text", x = as.Date("2024-06-20"), y = 10, na.rm = TRUE,
+           label = "ARCOM new deliberation", angle = 90, hjust = 0, size = 3) +
+  scale_x_date(date_breaks = "1 month", date_labels = "%b %Y") +
+  theme_minimal(base_family = "serif") + 
+  theme(
+    panel.grid.major.x = element_blank(),  # No vertical grille
+    panel.grid.major.y = element_line(color = "gray80", size = 0.3),
+    plot.title = element_text(hjust = 0.5),
+    legend.position = "bottom"
+    ) +
+  labs(
+    title = "Graphic 1: Number of guest by party and by month",
+    x = "Months",
+    y = "Number of guest",
+    color = "Parties"
+  ) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{=latex}
+{\small\textbf{Note}: The graphic plots the number of guests on our programs from September 2023 to April 2025. Parties considered as 'Left' are: Farleft (NPA and Force ouvrière), LFI, PCF, EELV, NUPES and PS. Parties considered as 'Presidential Majority' are: MajPre (see Table 1), MODEM and LIOT. Parties considered as 'Right' are: LR, DLF, RN and Reconquête.}
+``` 
+
+Since private TV-radio channels in our sample are mainly about politics (BFM TV, Cnews, Europe 1, RMC) rather than entertainment  - as it is more the case in public services (France Info, France Inter, France 5) -, private channels could be driving our results, since most of the guests we identified on those channels have a right-leaning political orientation. Moreover, the example of Cnews disrespect of pluralism described in the introduction shows that such private channel seems to not respect pluralism. Conversely, our data in Table 1 suggest that public services are more likely to host guests from left and presidential majority. Thus, we want to understand if private channels are indeed more likely to host right-leaning guests and public channels more likely to host left-leaning guests. 
+
+```{r data-studyleftright-plot, echo=FALSE, warning=FALSE, message=FALSE}
+Plurality_private_public_study <- Plurality_private_public_study %>%
+  mutate(Governance_inv = 1 - Governance)
+# Modèle 1 : probabilité d’être invité par une chaîne privée
+model_private <- glm(Governance ~ Political_Index,
+                     data = Plurality_private_public_study,
+                     family = binomial(link = "logit"))
+
+# Modèle 2 : probabilité d’être invité par une chaîne publique
+model_public <- glm(Governance_inv ~ Political_Index,
+                    data = Plurality_private_public_study,
+                    family = binomial(link = "logit"))
+
+# Récupérer les deux tableaux
+tab_private <- tidy(model_private, exponentiate = TRUE) %>%
+  filter(term == "Political_Index") %>%
+  mutate(Model = "Private channels")
+
+tab_public <- tidy(model_public, exponentiate = TRUE) %>%
+  filter(term == "Political_Index") %>%
+  mutate(Model = "Public channels")
+
+# Reformater p-values
+tab_both <- bind_rows(tab_private, tab_public) %>%
+  mutate(p.value = ifelse(p.value < 0.001, "< 0.001", round(p.value, 3))) %>%
+  select(Model, estimate, p.value) %>%
+  rename(
+    `Odds Ratio` = estimate,
+    `p-value` = p.value
+  )
+
+# Afficher le tableau
+kable(tab_both,
+      caption = "Comparison of logistic regressions by channel type",
+      digits = 3,
+      align = c("l", "r", "r")) %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+```
+
+Results in Table 4 confirm this assumption. An odds ratio of 1.244 for private channels means that having an increase of one on a political index of a guest increases its likelihood of being on a private channel by 24.4%, confirming that private channel invite more right-leaning guests (odds = 1.244, p_value < 0,001). Despite the magnitude of the effect being lower for public channels compared to private channels,  we still observe that an increase of one political index for a guest decreases his/her likelihood to  be hosted by public channels by 19.6%, which means that more on the right-wing a politician is, the less it has chance to be invited on public channels . This result is also significant (odds = 0.804, p_value < 0,001).
+
+# Discussion 
+
+My results on pluralism do not necessarily mean that private and public channels deliberately choose to invite more guests from one side of the political spectrum than the other. Indeed, it is usual that left-oriented political individuals refuse to go on private channels, especially Cnews. The recent debate between parties at the left of political spectrum about going or not going on Cnews before the European elections illustrate this fact \parencite{liberation_elections_nodate}. This specific fact is often used by the CNews management to justify the lack of pluralism on its channel.
+
+\vspace{1\baselineskip}
+
+```{r data-processing-plot-Cnews, echo=FALSE, warning=FALSE, message=FALSE}
+# To make a graph from September 2023 to april 2025 for Cnews
+
+Plurality_by_month_Cnews <- Plurality_data %>%
+  filter(chaine == "Cnews/Europe1") %>%
+  filter(date_formate >= as.Date("2023-09-01") & date_formate <= as.Date("2025-04-30")) %>%
+  mutate(month = floor_date(date_formate, unit = "month")) %>%
+  group_by(month) %>%
+  summarise(
+    Far_left = sum(Far_left, na.rm = TRUE),
+    LFI = sum(LFI, na.rm = TRUE),
+    EELV = sum(EELV, na.rm = TRUE),
+    PCF = sum(PCF, na.rm = TRUE),
+    PS = sum(PS, na.rm = TRUE),
+    NUPES = sum(NUPES, na.rm = TRUE),
+    Maj_Pre = sum(Maj_Pre, na.rm = TRUE),
+    MODEM = sum(MODEM, na.rm = TRUE),
+    LIOT = sum(LIOT, na.rm = TRUE),
+    LR = sum(LR, na.rm = TRUE),
+    DLF = sum(DLF, na.rm = TRUE),
+    RN = sum(RN, na.rm = TRUE),
+    Reconquête = sum(Reconquête, na.rm = TRUE)
+  ) %>%
+  ungroup()
+
+Plurality_by_month_long_Cnews <- Plurality_by_month_Cnews %>%
+  pivot_longer(cols = -month, names_to = "Party", values_to = "Number_of_guest") %>%
+  mutate (
+    Party = case_when(
+      Party %in% c("Far_left", "LFI", "EELV", "PCF", "PS", "NUPES") ~ "Left",
+      Party %in% c("Maj_Pre", "MODEM", "LIOT") ~ "Presidential majority",
+      Party %in% c("LR", "DLF", "RN", "Reconquête") ~ "Right"),
+    month = as.Date(month),
+    Number_of_guest = as.numeric(Number_of_guest)) %>%
+  group_by(month, Party) %>%
+  summarise(Number_of_guest = sum(Number_of_guest, na.rm = TRUE), .groups = "drop")
+
+ggplot(Plurality_by_month_long_Cnews, aes(x = month, y = Number_of_guest, color = Party))+
+  geom_point(size = 1.5) +
+  geom_line(size = 0.4) +
+  geom_vline(xintercept = as.Date("2024-03-01"), linetype = "dashed", color = "black") +
+  annotate("text", x = as.Date("2024-02-01"), y = 5, na.rm = TRUE,
+           label = "Parlementary commission", angle = 90, hjust = 0, size = 3) +
+  scale_x_date(date_breaks = "1 month", date_labels = "%b %Y") +
+  theme_minimal(base_family = "serif") + 
+  theme(
+    panel.grid.major.x = element_blank(),  # No vertical grille
+    panel.grid.major.y = element_line(color = "gray80", size = 0.3),
+    plot.title = element_text(hjust = 0.5),
+    legend.position = "bottom"
+    ) +
+  labs(
+    title = "Graphic 2: Number of guest by party and by month on Cnews",
+    x = "Months",
+    y = "Number of guest",
+    color = "Parties"
+  ) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{=latex}
+{\small\textbf{Note}: The graphic plots the number of guests on the Great Interview of Sonia Mabrouk from September 2023 to April 2025. Parties considered as 'Left' are: Farleft (NPA and Force ouvrière), LFI, PCF, EELV, NUPES and PS. Parties considered as 'Presidential Majority' are: MajPre (see Table 1), MODEM and LIOT. Parties considered as 'Right' are: LR, DLF, RN and Reconquête.}
+``` 
+
+Graphic 2 may call into question the above argument. Indeed, it shows that between June 2024 and October 2024, Cnews channel had no problem to invite on the program *L'interview politique* of Sonia Mabrouk left-leaning people, even having on september 2024 a majority of left-leaning guests. This period  coincides with the renewal of TNT frequencies. Indeed, Cnews executives and presenters (including Sonia Mabrouk) were questioned on February 29 2024 by a parliamentary committee of inquiry about the renewal of Cnews on the TNT and the lack of pluralism on the channel. Following this parliamentary comission (with two months in delay as in Graphic 1, which we can attribute to programming that is usually done weeks in advance and to the necessity of creating new contacts for television programmers), it seems that Cnews took its pluralism obligations much more seriously, with almost a perfect pluralism respected between June 2024 and October 2024. This fact highlights that Cnews has the capacity to host left-leaning guests, especially when its diffusion rights are in danger. However, it seems that this mission of pluralism was lost again after November 2024. Since this month, almost no left-oriented guests were invited on *L'interview politique* of Sonia Mabrouk. Thus, it seems that the private channel Cnews is willingly not respecting its duty of pluralism. 
+
+The study presented here is under several limits. For instance, I am only monitoring Cnews through *L'interview politique* of Sonia Mabrouk, despite many other political programs being on the channel. I think that this criticism does not apply to my work, since pluralism should not only be maintained across channels, but also across programs, since a lot of individuals have a viewing routine. Still, it could be much more interesting to study the whole Cnews programs. Unfortunately, the archives of Cnews are not well fitted for scrapping, with almost no information on programs, making it difficult to extend the study. *L'interview politique* of Sonia Mabrouk was convenient, since replays were actually available on Europe 1 archives (the program being diffused simultaneously on the TV channel Cnews and the radio Europe 1). This limit applies to the other channels, for whom I only took one program (despite being the main political talk show with political guest). Even if drawing conclusion on the whole channel could be precipited, we can still draw conclusion program by program, as with the case of *L'interview politique* of Sonia Mabrouk. 
+
+\vspace{1\baselineskip}
+
+```{r data-processing-plot-fourchannels, echo=FALSE, warning=FALSE, message=FALSE}
+# Filtrer les chaînes d’intérêt
+selected_channels <- c("FranceInfo", "France 5", "BFMTV/RMC", "FranceInter")
+
+Plurality_by_month_selected <- Plurality_data %>%
+  filter(chaine %in% selected_channels) %>%
+  filter(date_formate >= as.Date("2023-09-01") & date_formate <= as.Date("2025-04-30")) %>%
+  mutate(month = floor_date(date_formate, unit = "month")) %>%
+  group_by(month, chaine) %>%
+  summarise(
+    Far_left = sum(Far_left, na.rm = TRUE),
+    LFI = sum(LFI, na.rm = TRUE),
+    EELV = sum(EELV, na.rm = TRUE),
+    PCF = sum(PCF, na.rm = TRUE),
+    PS = sum(PS, na.rm = TRUE),
+    NUPES = sum(NUPES, na.rm = TRUE),
+    Maj_Pre = sum(Maj_Pre, na.rm = TRUE),
+    MODEM = sum(MODEM, na.rm = TRUE),
+    LIOT = sum(LIOT, na.rm = TRUE),
+    LR = sum(LR, na.rm = TRUE),
+    DLF = sum(DLF, na.rm = TRUE),
+    RN = sum(RN, na.rm = TRUE),
+    Reconquête = sum(Reconquête, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# Convertir en format long et regrouper par famille politique
+Plurality_by_month_long_selected <- Plurality_by_month_selected %>%
+  pivot_longer(cols = -c(month, chaine), names_to = "Party", values_to = "Number_of_guest") %>%
+  mutate(
+    Party = case_when(
+      Party %in% c("Far_left", "LFI", "EELV", "PCF", "PS", "NUPES") ~ "Left",
+      Party %in% c("Maj_Pre", "MODEM", "LIOT") ~ "Presidential majority",
+      Party %in% c("LR", "DLF", "RN", "Reconquête") ~ "Right"
+    ),
+    month = as.Date(month),
+    Number_of_guest = as.numeric(Number_of_guest)
+  ) %>%
+  group_by(month, chaine, Party) %>%
+  summarise(Number_of_guest = sum(Number_of_guest, na.rm = TRUE), .groups = "drop")
+
+# Créer le panel de graphiques
+ggplot(Plurality_by_month_long_selected, aes(x = month, y = Number_of_guest, color = Party)) +
+  geom_point(size = 1.5) +
+  geom_line(size = 0.5) +
+  scale_x_date(date_breaks = "2 months", date_labels = "%b %Y") +
+  facet_wrap(~ chaine, ncol = 2) +
+  theme_minimal(base_family = "serif") +
+  theme(
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray80", size = 0.3),
+    plot.title = element_text(hjust = 0.5),
+    legend.position = "bottom",
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  ) +
+  labs(
+    title = "Graphic 3: Number of guests by party over time by channel",
+    x = "Month",
+    y = "Number of guests",
+    color = "Parties"
+  )
+``` 
+
+```{=latex}
+{\small\textbf{Note}: The graphic plots the number of guests by channels from September 2023 to April 2025. Parties considered as 'Left' are: Farleft (NPA and Force ouvrière), LFI, PCF, EELV, NUPES and PS. Parties considered as 'Presidential Majority' are: MajPre (see Table 1), MODEM and LIOT. Parties considered as 'Right' are: LR, DLF, RN and Reconquête.}
+``` 
+
+Graphic 3 shows that the program *Face à Duhamel* of BFM TV/RMC has a striking lack of pluralism, since its guests are almost only right-oriented. About FranceInter and France 5, no clear pattern seems to be identifiable, with a perfect pluralism periodically respected. As stated in the methodology, it is seldom for the program *Les informés* to have political guests because they are mainly inviting journalists since 2020, which is clear in Graphic 3. This lead us to another limit of the study, which concern journalists.
+
+Another limit of my analysis is that I am only considering politicians affiliated to a political party in my study, when a lot of journalists are actually talking on talk show. It could be interesting to study pluralism taking into account the political orientation of the journalists speaking. However, this method was not privileged here, because the selected programs for my work with Julia Cagé and Camille Urvoy mainly invited politicians. A limit could apply about studying pluralism of journalists. Indeed, when watching different channels during my internship, I identified that Cnews was not signaling where the journalists talking on its channel are coming from, whereas other channels do. This fact was also identified by journalists themselves \parencite{liberation_pluralisme_2024}. This issue could make it difficult to study the pluralism of journalists on the Cnews channel, due to what seems to be an editorial decision, since other channels are presenting journalists properly. 
+
+Furthermore, journalists are not the only ones not took into account in my study, as the "politically engaged non-politicians" (PENOPs) people are as well not in my study. This point is related to my project with Julia Cagé and Camille Urvoy, since we want to study how people may perceive differently PENOPs. The results of this project could have many implications for monitoring pluralism. Indeed, PENOPs could be a tool for channels to disrespect pluralism without being monitored by Arcom. Since I identified a lot of PENOPs in my data, it could be interesting to compare pluralism with PENOPs and without PENOPs, to see if they are more a tool to increase pluralism or conversely a tool to decrease it. Such study would need much more time and should rely on a manual classification of PENOPs to either "left", "right" or "presidential majority". this fact highlights another limitation of my study, since "left", "right" or "presidential majority" are not homogeneous groups. Thus, grouping like this can make invisible some lack of pluralism within political congruent formations, as already highlighted in methodology (with PS being over-represented and Reconquête being under-represented. 
+
+Another important aspect to discuss is the latest news concerning Thibault de Montbrial, one of the guests we have selected for the experimental design of the PENOPs perception project. Indeed, Pierre-Édouard Stérin - the billionaire at the head of the Pericles project, which aims to make the far-right win the 2027 French presidential election with a strong media presence - was summoned by a cross-party parliamentary commission of inquiry into the “organization of elections in France” on the may 14 and then may 20 for which he refused to attend, citing risks to his personal safety. The president of the comission has announced that he has taken the case to court \parencite{lemonde_pierre-edouard_2025}. Thibault de Montbrial is the director of the *Centre de réflexion sur la sécurité intérieure (CRSI)*, which is an organization funded by Stérin in the extent of the Pericles project. The lack of transparency of Pierre-Édouard Stérin concerning his funding of such institution and his refusal to appear in front of the national representation raises serious questions about the role of media in the French democracy and make it urgent to study French media pluralism and the tools that might be used to disrespect pluralism rules without being caught.
+
+# Conclusion
+
+In conclusion, my internship was about (and will continue to be about until July 26 2025, the date of its end) two projects: two surveys on journalists and media owners and one experimental study on PENOPs. Concerning the project about the surveys, my role was to take inspiration from previous literature in order to produce two surveys that will be sent by the  CCIJP to journalists and media owners. About the experimental study on PENOPs, my role was to get a broad idea of who was talking where and when on French TV, in order to select guests and TV excerpts that we could use in our experimental design. In doing so, I was able to collect data useful to monitor pluralism in French TV-radio broadcast environment. 
+
+Those data allowed me to conclude that private TV-radio channels are more likely to host right-leaning guests, while the opposite is true to a lesser extent for left-leaning guests being over-represented on public channels. My data also allows me to question the Cnews channel's argument that its lack of pluralism is due to the fact that left-wing politicians don't want to appear on its channel, since they were able to host left-leaning guests when their broadcasting license was under threat. 
+
+# Acknowledgements
+
+First of all, I would like to warmly thank Julia for her support throughout the internship. It was an incredible opportunity to take part in these two projects, while getting paid, which is no mean feat when you are a student. I could not have dreamed of a better working atmosphere, with one meeting a week to maintain a close working relationship, while having enough space to learn and take my own initiatives. I was particularly lucky to meet Julia when she was awarded the Yrjö Jahnsson 2025 prize. It reassured me that the work of a media economist could be so widely recognized. Thank you Julia for being the economist you are ! 
+
+I cannot fail to mention and thank Camille, which was like another internship supervisor. It was always a real pleasure to see you at each meetings with Julia, usually by visio but even better sometimes in Paris. Your good humor and kindness made my internship a great time, for that many thanks to you. I cannot wait to read your study on C8 and *Touche Pas à Mon Poste.* !
+
+# Bibliography 
